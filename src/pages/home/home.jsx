@@ -1,15 +1,20 @@
-import { CategoryList, Header, PizzaList, Sort } from "../../components";
-import {} from "../../components/category-list";
+import {
+  CategoryList,
+  Container,
+  Header,
+  PizzaList,
+  Sort,
+} from "../../components";
 
 export const Home = () => {
   return (
-    <>
-      <Header />
-      <div className="flex items-center justify-between">
+    <Container>
+      <Header link="cart" />
+      <div className="flex flex-col xl:flex-row items-center justify-center xl:justify-between mt-4">
         <CategoryList />
         <Sort />
       </div>
       <PizzaList />
-    </>
+    </Container>
   );
 };

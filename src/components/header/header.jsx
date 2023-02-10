@@ -2,28 +2,33 @@ import logo from "../../assets/images/logo.png";
 import basket from "../../assets/images/iconfinder_shopping-cart.svg";
 
 import styles from "./header.module.scss";
+import { Link } from "react-router-dom";
 
-export const Header = () => {
+export const Header = ({ link }) => {
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <a href="/">
+        <Link to="/">
           <img src={logo} alt="site logo" width={38} height={38} />
-        </a>
+        </Link>
 
         <div className="ml-3">
-          <span className="text-lg font-bold uppercase ">pizza</span>
+          <h1 className="text-lg font-bold uppercase ">pizza</h1>
         </div>
       </div>
 
-      <a className={styles.basket} href="/">
-        <span>520 ₽</span>
+      {link && (
+        <Link className={styles.basket} to="/cart">
+          <span className="hidden md:inline">
+            <span>520 ₽</span>
 
-        <span className="mx-4 ">|</span>
+            <span className="mx-4 ">|</span>
+          </span>
 
-        <img src={basket} alt="basket" width={16} height={16} />
-        <span className="ml-2">3</span>
-      </a>
+          <img src={basket} alt="basket" width={16} height={16} />
+          <span className="ml-2">3</span>
+        </Link>
+      )}
     </header>
   );
 };

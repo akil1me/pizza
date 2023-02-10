@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./pizza.module.scss";
+import { message } from "antd";
 
 const typePizza = ["тонкое", "традиционное"];
 
@@ -10,7 +11,14 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
   const [pizzaCount, setPizzaCount] = useState(0);
 
   const handlePizzaount = () => {
-    setPizzaCount((prev) => prev + 1);
+    setPizzaCount((prev) => {
+      if (prev < 10) {
+        return prev + 1;
+      } else {
+        message.error("Можно заказать максимум 10 одинаковых пицц");
+        return prev;
+      }
+    });
   };
 
   return (
@@ -20,7 +28,7 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
 
       <div className={styles.pizzaTypeContent}>
         <ul className={styles.pizzaList}>
-          {types.map((typeNum) => (
+          {types?.map((typeNum) => (
             <li
               key={typeNum}
               onClick={() => setActiveType(typeNum)}
@@ -36,7 +44,7 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
         </ul>
 
         <ul className={styles.pizzaList}>
-          {sizes.map((size, index) => (
+          {sizes?.map((size, index) => (
             <li
               key={size}
               onClick={() => setActiveSize(index)}
@@ -53,14 +61,13 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
       </div>
 
       <div className={styles.pizzaFooter}>
-        <p className={styles.pizzaPrice}>от {price} ₽</p>
+        <p className={styles.pizzaPrice}>от {price[activeSize]} ₽</p>
         <button
           onClick={handlePizzaount}
           className={styles.pizzaAdd}
           type="button"
         >
-          <span className="mr-2">+</span>
-          Добавить
+          в корзину
           {pizzaCount === 0 ? null : (
             <span className={styles.pizzaCount}>{pizzaCount}</span>
           )}

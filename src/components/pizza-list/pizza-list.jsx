@@ -6,36 +6,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { pizzasActions } from "../../store";
 import axios from "axios";
 import { API_URL } from "../../utils";
+import { categorys } from "../../data";
 
 export const PizzaList = () => {
-  const pizzas = useSelector((item) => item.pizzas);
+  const { pizzas, isLoading, categoryActive } = useSelector((item) => item);
   const dispatch = useDispatch();
-  const [loarder, setLoader] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
-        setLoader(true);
+        dispatch(pizzasActions.setIsLoading(true));
 
         const { data } = await axios(API_URL);
         dispatch(pizzasActions.setPizzas(data));
       } catch (err) {
         console.log(err);
       } finally {
-        setLoader(false);
+        dispatch(pizzasActions.setIsLoading(false));
       }
     })();
+
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
   return (
     <div className="mt-5">
-      <h3 className="text-3xl font-bold mb-7">Все пиццы</h3>
+      <h2 className="text-3xl font-bold mb-7">
+        {categorys[categoryActive]} пиццы
+      </h2>
 
-      <ul className="flex flex-wrap justify-center">
-        {!loarder
-          ? pizzas.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
+      <ul className="grid grid-cols-1 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4 ">
+        {!isLoading
+          ? pizzas?.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
           : [...new Array(10)].map((_, index) => (
-              <li key={index} style={{ marginLeft: 35, marginBottom: 50 }}>
+              <li key={index} style={{ marginBottom: 50 }}>
                 <Loader />
               </li>
             ))}

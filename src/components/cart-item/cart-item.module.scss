@@ -1,0 +1,8 @@
+.cartItem {
+  @apply flex justify-between items-center py-7;
+  border-top: 1px solid #f6f6f6;
+
+  .cartBtn {
+    @apply border-none text-red-500;
+  }
+}

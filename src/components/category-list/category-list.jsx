@@ -1,29 +1,67 @@
-import { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { pizzasActions } from "../../store";
+import { API_URL } from "../../utils";
 import { CategoryItem } from "../category-item";
-
-const categorys = [
-  "Bce",
-  "Мясные",
-  "Вегетарианская",
-  "Гриль",
-  "Острые",
-  "Закрытые",
-];
+import { categorys } from "../../data";
 
 export const CategoryList = () => {
-  const [active, setActive] = useState(0);
+  const categoryActive = useSelector((item) => item.categoryActive);
+
+  const dispatch = useDispatch();
+
+  const handleCategoryClick = (i) => {
+    dispatch(pizzasActions.setCategoryActive(i));
+    (async () => {
+      try {
+        dispatch(pizzasActions.setIsLoading(true));
+        const { data } = await axios(
+          API_URL + (+i !== 0 ? "?category=" + i : "")
+        );
+
+        dispatch(pizzasActions.setPizzas(data));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch(pizzasActions.setIsLoading(false));
+      }
+    })();
+  };
 
   return (
-    <ul className="flex">
-      {categorys.map((title, index) => (
-        <CategoryItem
-          key={title}
-          title={title}
-          index={index}
-          active={active}
-          onClick={() => setActive(index)}
-        />
-      ))}
-    </ul>
+    <>
+      <ul className="hidden lg:flex  mb-4 lg:mb-0">
+        {categorys.map((title, index) => (
+          <CategoryItem
+            key={title}
+            title={title}
+            index={index}
+            active={categoryActive}
+            handleCategoryClick={() => handleCategoryClick(index)}
+          />
+        ))}
+      </ul>
+
+      <div className="lg:hidden flex flex-col sm:flex-row items-center ">
+        <span>Категория по:</span>
+        <select
+          className="w-20 text-orange-500 ml-2 outline-none bg-transparent"
+          onChange={(e) => handleCategoryClick(e.target.value)}
+        >
+          {categorys.map((item, index) => {
+            return (
+              <option
+                key={index}
+                defaultValue={index}
+                selected={categoryActive === +index}
+                value={index}
+              >
+                {item}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    </>
   );
 };
