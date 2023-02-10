@@ -4,7 +4,7 @@ export const Loader = (props) => {
   return (
     <ContentLoader
       speed={2}
-      width={260}
+      width={"100%"}
       height={449.6}
       viewBox="0 0 260 449.6"
       backgroundColor="#f3f3f3"
