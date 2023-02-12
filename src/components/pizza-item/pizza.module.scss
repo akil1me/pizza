@@ -8,6 +8,11 @@
     object-fit: contain;
     width: 260px;
     height: 260px;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
   }
 
   .pizzaTypeContent {

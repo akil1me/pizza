@@ -1,9 +1,7 @@
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { pizzasActions } from "../../store";
-import { API_URL } from "../../utils";
-import { CategoryItem } from "../category-item";
 import { categorys } from "../../data";
+import { pizzasActions } from "../../store";
+import { CategoryItem } from "../category-item";
 
 export const CategoryList = () => {
   const categoryActive = useSelector((item) => item.categoryActive);
@@ -12,20 +10,6 @@ export const CategoryList = () => {
 
   const handleCategoryClick = (i) => {
     dispatch(pizzasActions.setCategoryActive(i));
-    (async () => {
-      try {
-        dispatch(pizzasActions.setIsLoading(true));
-        const { data } = await axios(
-          API_URL + (+i !== 0 ? "?category=" + i : "")
-        );
-
-        dispatch(pizzasActions.setPizzas(data));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        dispatch(pizzasActions.setIsLoading(false));
-      }
-    })();
   };
 
   return (

@@ -5,6 +5,7 @@ export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
   initialState: {
     pizzas: [],
     categoryActive: 0,
+    sorting: "",
     isLoading: false,
   },
 
@@ -19,6 +20,10 @@ export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
 
     setCategoryActive: (state, { payload }) => {
       state.categoryActive = payload;
+    },
+
+    setSorting: (state, { payload }) => {
+      state.sorting = payload;
     },
   },
 });
