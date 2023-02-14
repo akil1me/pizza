@@ -1,5 +1,5 @@
 .cartItem {
-  @apply flex justify-between items-center py-7;
+  @apply relative flex justify-between items-center flex-col sm:flex-row text-center py-7;
   border-top: 1px solid #f6f6f6;
 
   .cartBtn {

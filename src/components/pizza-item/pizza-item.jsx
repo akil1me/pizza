@@ -1,24 +1,39 @@
 import { useState } from "react";
 import styles from "./pizza.module.scss";
 import { message } from "antd";
+import { useDispatch } from "react-redux";
+import { setAddItems } from "../../store";
 
 const typePizza = ["тонкое", "традиционное"];
 
-export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
+export const PizzaItem = ({ id, title, imageUrl, sizes, types, price }) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
 
   const [pizzaCount, setPizzaCount] = useState(0);
 
+  const dispatch = useDispatch();
+
   const handlePizzaount = () => {
-    setPizzaCount((prev) => {
-      if (prev < 10) {
-        return prev + 1;
-      } else {
-        message.error("Можно заказать максимум 10 одинаковых пицц");
-        return prev;
-      }
-    });
+    // setPizzaCount((prev) => {
+    //   if (prev < 10) {
+    //     return prev + 1;
+    //   } else {
+    //     message.error("Можно заказать максимум 10 одинаковых пицц");
+    //     return prev;
+    //   }
+    // });
+    const item = {
+      id,
+      title,
+      imageUrl,
+      sizes: sizes[activeSize],
+      types: typePizza[activeType],
+      price: price[activeSize],
+    };
+    console.log(item);
+
+    dispatch(setAddItems());
   };
 
   return (

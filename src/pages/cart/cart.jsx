@@ -4,8 +4,8 @@ export const Cart = () => {
   return (
     <Container>
       <Header />
-      <CartEmty />
-      {/* <CartList /> */}
+      {/* <CartEmty /> */}
+      <CartList />
     </Container>
   );
 };

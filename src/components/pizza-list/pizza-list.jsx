@@ -13,12 +13,12 @@ import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
 export const PizzaList = () => {
-  const isSearch = useRef(false);
+  const { pizzas, isLoading, categoryActive, sorting, pageNum } = useSelector(
+    (item) => item.pizzas
+  );
+
   const isMount = useRef(false);
 
-  const { pizzas, isLoading, categoryActive, sorting, pageNum } = useSelector(
-    (item) => item
-  );
   const dispatch = useDispatch();
 
   const [err, setErr] = useState("");
@@ -30,7 +30,14 @@ export const PizzaList = () => {
   const navigate = useNavigate();
   const total = categoryActive === 0 ? 30 : 10;
 
-  const fetchApi = () => {
+  useEffect(() => {
+    if (window.location.search !== "") {
+      const parse = qs.parse(window.location.search.substring(1));
+      dispatch(pizzasActions.setParapms({ ...parse }));
+    }
+  }, []);
+
+  useEffect(() => {
     const category = +categoryActive !== 0 ? "&category=" + categoryActive : "";
     const sort = sorting !== "" ? `&sortby=${sorting}&order=desc` : "";
     const page =
@@ -49,7 +56,7 @@ export const PizzaList = () => {
         dispatch(pizzasActions.setIsLoading(false));
       }
     })();
-  };
+  }, [categoryActive, sorting, pageNum, dispatch]);
 
   useEffect(() => {
     if (isMount.current) {
@@ -63,23 +70,6 @@ export const PizzaList = () => {
     }
     isMount.current = true;
   }, [categoryActive, sorting, pageNum, dispatch]);
-
-  useEffect(() => {
-    if (window.location.search) {
-      const parse = qs.parse(window.location.search.substring(1));
-      dispatch(pizzasActions.setParapms({ ...parse }));
-      isSearch.current = true;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isSearch.current) {
-      fetchApi();
-    }
-
-    isSearch.current = false;
-  }, [categoryActive, sorting, pageNum, dispatch]);
-
   return (
     <div className={styles.pizzaContent}>
       <h2 className={styles.title}>{categorys[categoryActive]} пиццы</h2>

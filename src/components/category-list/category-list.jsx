@@ -6,7 +6,7 @@ import { CategoryItem } from "../category-item";
 import styles from "./category-list.module.scss";
 
 export const CategoryList = () => {
-  const categoryActive = useSelector((item) => item.categoryActive);
+  const categoryActive = useSelector((item) => item.pizzas.categoryActive);
 
   const dispatch = useDispatch();
 

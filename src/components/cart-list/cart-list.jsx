@@ -16,16 +16,23 @@ export const CartList = () => {
           <h2 className={styles.title}>Корзина</h2>
         </div>
 
-        <Button className="flex items-center" danger icon={<DeleteOutlined />}>
-          Очистить корзину
+        <Button
+          className="flex items-center justify-center"
+          danger
+          icon={<DeleteOutlined />}
+        >
+          <p className="ml-3 hidden sm:block"> Очистить корзину</p>
         </Button>
       </div>
 
       <ul className="mt-7">
         <CartItem />
+        <CartItem />
+        <CartItem />
+        <CartItem />
       </ul>
 
-      <div className="flex justify-between items-center mt-3">
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-3">
         <p>Всего пицц: 3 шт.</p>
         <p>
           Сумма заказа: <span className="text-orange-500 font-bold">900 ₽</span>
@@ -38,11 +45,11 @@ export const CartList = () => {
           onClick={() => navigate("/")}
           icon={<LeftOutlined className="align-middle" />}
         >
-          Вернуться назад
+          Назад
         </Button>
 
         <Button danger className="rounded-lg text-orange-500">
-          Оплатить сейчас
+          Оплатить
         </Button>
       </div>
     </div>
