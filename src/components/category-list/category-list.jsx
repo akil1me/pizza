@@ -3,6 +3,8 @@ import { categorys } from "../../data";
 import { pizzasActions } from "../../store";
 import { CategoryItem } from "../category-item";
 
+import styles from "./category-list.module.scss";
+
 export const CategoryList = () => {
   const categoryActive = useSelector((item) => item.categoryActive);
 
@@ -14,7 +16,7 @@ export const CategoryList = () => {
 
   return (
     <>
-      <ul className="hidden lg:flex  mb-4 lg:mb-0">
+      <ul className={styles.categoryList}>
         {categorys.map((title, index) => (
           <CategoryItem
             key={title}
@@ -26,20 +28,16 @@ export const CategoryList = () => {
         ))}
       </ul>
 
-      <div className="lg:hidden flex flex-col sm:flex-row items-center ">
+      <div className={styles.categoryListMobile}>
         <span>Категория по:</span>
         <select
-          className="w-20 text-orange-500 ml-2 outline-none bg-transparent"
+          className={styles.categoryListSelect}
           onChange={(e) => handleCategoryClick(e.target.value)}
+          value={categoryActive}
         >
           {categorys.map((item, index) => {
             return (
-              <option
-                key={index}
-                defaultValue={index}
-                selected={categoryActive === +index}
-                value={index}
-              >
+              <option key={index} value={index}>
                 {item}
               </option>
             );

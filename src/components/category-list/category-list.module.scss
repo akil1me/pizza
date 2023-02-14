@@ -1,0 +1,9 @@
+.categoryList {
+  @apply hidden lg:flex  mb-4 xl:mb-0;
+}
+.categoryListMobile {
+  @apply lg:hidden flex flex-col sm:flex-row items-center mb-4 xl:mb-0;
+}
+.categoryListSelect {
+  @apply w-20 text-orange-500 ml-2 outline-none bg-transparent;
+}

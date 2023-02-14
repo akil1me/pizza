@@ -1,0 +1,13 @@
+.pizzaContent {
+  @apply mt-5;
+}
+.title {
+  @apply text-3xl font-bold mb-7;
+}
+
+.pizzasList {
+  @apply grid grid-cols-1 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4;
+}
+.pagination {
+  @apply text-center mt-4;
+}

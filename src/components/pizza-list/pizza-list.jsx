@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
-// import { pizzas } from "../../data";
-import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { categorys } from "../../data";
 import { pizzasActions } from "../../store";
+import { categorys } from "../../data";
 import { API_URL } from "../../utils";
 import { Loader } from "../loader";
 import { PizzaItem } from "../pizza-item";
 import { Pagination } from "antd";
+import axios from "axios";
+
+import styles from "./pizza-list.module.scss";
+import qs from "qs";
+import { useNavigate } from "react-router-dom";
 
 export const PizzaList = () => {
-  const { pizzas, isLoading, categoryActive, sorting } = useSelector(
+  const isSearch = useRef(false);
+  const isMount = useRef(false);
+
+  const { pizzas, isLoading, categoryActive, sorting, pageNum } = useSelector(
     (item) => item
   );
   const dispatch = useDispatch();
 
-  const [pageNum, setPageNum] = useState(1);
+  const [err, setErr] = useState("");
+
   const onChangePage = (page) => {
-    setPageNum(page);
+    dispatch(pizzasActions.setPageNum(page));
   };
 
+  const navigate = useNavigate();
   const total = categoryActive === 0 ? 30 : 10;
 
-  useEffect(() => {
+  const fetchApi = () => {
     const category = +categoryActive !== 0 ? "&category=" + categoryActive : "";
     const sort = sorting !== "" ? `&sortby=${sorting}&order=desc` : "";
     const page =
@@ -36,29 +44,63 @@ export const PizzaList = () => {
         dispatch(pizzasActions.setPizzas(data));
       } catch (err) {
         console.log(err);
+        setErr(err.message);
       } finally {
         dispatch(pizzasActions.setIsLoading(false));
       }
     })();
+  };
+
+  useEffect(() => {
+    if (isMount.current) {
+      const queryStr = qs.stringify({
+        categoryActive,
+        sorting,
+        pageNum,
+      });
+
+      navigate(`?${queryStr}`);
+    }
+    isMount.current = true;
+  }, [categoryActive, sorting, pageNum, dispatch]);
+
+  useEffect(() => {
+    if (window.location.search) {
+      const parse = qs.parse(window.location.search.substring(1));
+      dispatch(pizzasActions.setParapms({ ...parse }));
+      isSearch.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetchApi();
+    }
+
+    isSearch.current = false;
   }, [categoryActive, sorting, pageNum, dispatch]);
 
   return (
-    <div className="mt-5">
-      <h2 className="text-3xl font-bold mb-7">
-        {categorys[categoryActive]} пиццы
-      </h2>
+    <div className={styles.pizzaContent}>
+      <h2 className={styles.title}>{categorys[categoryActive]} пиццы</h2>
 
-      <ul className="grid grid-cols-1 md:grid-cols-2 md:gap-16 lg:grid-cols-3 xl:grid-cols-4 ">
-        {!isLoading
-          ? pizzas?.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
-          : [...new Array(4)].map((_, index) => (
-              <li key={index} style={{ marginBottom: 50 }}>
-                <Loader />
-              </li>
-            ))}
-      </ul>
-
-      <div className="text-center mt-4">
+      {err == "" ? (
+        <ul className={styles.pizzasList}>
+          {!isLoading
+            ? pizzas?.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
+            : [...new Array(4)].map((_, index) => (
+                <li key={index} style={{ marginBottom: 50 }}>
+                  <Loader />
+                </li>
+              ))}
+        </ul>
+      ) : (
+        <div className="h-60 flex justify-center items-center text-3xl">
+          Ups 😥
+          {err}
+        </div>
+      )}
+      <div className={styles.pagination}>
         <Pagination current={pageNum} onChange={onChangePage} total={total} />
       </div>
     </div>

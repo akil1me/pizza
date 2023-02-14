@@ -7,23 +7,32 @@ export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
     categoryActive: 0,
     sorting: "",
     isLoading: false,
+    pageNum: 1,
   },
 
   reducers: {
-    setIsLoading: (state, { payload }) => {
+    setIsLoading(state, { payload }) {
       state.isLoading = payload;
     },
 
-    setPizzas: (state, { payload }) => {
+    setPizzas(state, { payload }) {
       state.pizzas = payload;
     },
 
-    setCategoryActive: (state, { payload }) => {
+    setCategoryActive(state, { payload }) {
       state.categoryActive = payload;
     },
 
-    setSorting: (state, { payload }) => {
+    setSorting(state, { payload }) {
       state.sorting = payload;
+    },
+    setPageNum(state, { payload }) {
+      state.pageNum = payload;
+    },
+    setParapms(state, { payload }) {
+      state.categoryActive = +payload.categoryActive;
+      state.pageNum = +payload.pageNum;
+      state.sorting = payload.sorting;
     },
   },
 });
