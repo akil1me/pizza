@@ -11,6 +11,7 @@ export const CategoryList = () => {
   const dispatch = useDispatch();
 
   const handleCategoryClick = (i) => {
+    console.log(i);
     dispatch(pizzasActions.setCategoryActive(i));
   };
 

@@ -20,7 +20,7 @@ export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
     },
 
     setCategoryActive(state, { payload }) {
-      state.categoryActive = payload;
+      state.categoryActive = +payload;
     },
 
     setSorting(state, { payload }) {

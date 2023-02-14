@@ -1,8 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { pizzasActions } from "../../store";
 import { sortOptions } from "../../data";
 
 export const Sort = () => {
+  const sorting = useSelector((item) => item.pizzas.sorting);
+
   const dispatch = useDispatch();
 
   const handleSortChange = (value) => {
@@ -15,6 +17,7 @@ export const Sort = () => {
 
       <select
         onChange={(e) => handleSortChange(e.target.value)}
+        value={sorting}
         className="text-orange-500 ml-2 outline-none bg-transparent"
       >
         {sortOptions.map((option) => {
