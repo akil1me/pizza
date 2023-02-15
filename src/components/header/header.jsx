@@ -3,8 +3,11 @@ import basket from "../../assets/images/iconfinder_shopping-cart.svg";
 
 import styles from "./header.module.scss";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Header = ({ link }) => {
+  const { totalCount, totalPrice } = useSelector((item) => item.cart);
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -20,13 +23,13 @@ export const Header = ({ link }) => {
       {link && (
         <Link className={styles.basket} to="/cart">
           <span className="hidden md:inline">
-            <span>520 ₽</span>
+            <span>{totalPrice} ₽</span>
 
             <span className="mx-4 ">|</span>
           </span>
 
           <img src={basket} alt="basket" width={16} height={16} />
-          <span className="ml-2">3</span>
+          <span className="ml-2">{totalCount}</span>
         </Link>
       )}
     </header>

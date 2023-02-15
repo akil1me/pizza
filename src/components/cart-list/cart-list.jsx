@@ -1,13 +1,39 @@
-import { DeleteOutlined, LeftOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  LeftOutlined,
+  ExclamationCircleFilled,
+} from "@ant-design/icons";
 import { Button } from "antd";
 import cart from "../../assets/images/cart.svg";
 
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../cart-item";
 import styles from "./cart-list.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import confirm from "antd/es/modal/confirm";
+import { setClearItems } from "../../store";
 
 export const CartList = () => {
+  const { items, totalPrice, totalCount } = useSelector((item) => item.cart);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: "Вы действительно хотите очистить корзину?",
+      icon: <ExclamationCircleFilled style={{ color: "#FF4D4F" }} />,
+      okText: "Да",
+      okType: "danger",
+      okCancel: "Нет",
+      cancelText: "Нет",
+      onOk() {
+        dispatch(setClearItems());
+      },
+      onCancel() {},
+    });
+  };
+
   return (
     <div className={styles.cartList}>
       <div className="flex items-center justify-between">
@@ -17,25 +43,26 @@ export const CartList = () => {
         </div>
 
         <Button
-          className="flex items-center justify-center"
+          onClick={showDeleteConfirm}
+          className="flex items-center justify-center h-auto px-3 py-2"
           danger
           icon={<DeleteOutlined />}
         >
-          <p className="ml-3 hidden sm:block"> Очистить корзину</p>
+          <strong className="ml-3 hidden sm:inline"> Очистить корзину</strong>
         </Button>
       </div>
 
       <ul className="mt-7">
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <CartItem />
+        {items?.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
       </ul>
 
       <div className="flex flex-col sm:flex-row justify-between items-center mt-3">
-        <p>Всего пицц: 3 шт.</p>
+        <p>Всего пицц: {totalCount} шт.</p>
         <p>
-          Сумма заказа: <span className="text-orange-500 font-bold">900 ₽</span>
+          Сумма заказа:{" "}
+          <span className="text-orange-500 font-bold">{totalPrice} ₽</span>
         </p>
       </div>
 

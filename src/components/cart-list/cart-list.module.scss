@@ -3,6 +3,10 @@
   margin: 0 auto;
   margin-top: 94px;
 
+  @media only screen and (max-width: 500px) {
+    margin-top: 30px;
+  }
+
   .title {
     font-weight: 700;
     font-size: 24px;

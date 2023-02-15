@@ -55,6 +55,7 @@
   }
 
   &Add {
+    height: auto;
     padding: 5px 14px 7px;
     background-color: #ffffff;
     border: 1px solid #eb5a1e;
@@ -66,19 +67,5 @@
       background-color: #eb5a1e;
       color: #ffffff;
     }
-
-    &:hover > .pizzaCount {
-      color: #eb5a1e;
-      background-color: #fff;
-    }
-  }
-
-  &Count {
-    padding: 0px 9px 3px;
-    margin-left: 5px;
-    background-color: #eb5a1e;
-    border-radius: 50%;
-    color: #fff;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
