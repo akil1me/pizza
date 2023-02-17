@@ -55,6 +55,7 @@
   }
 
   &Add {
+    position: relative;
     height: auto;
     padding: 5px 14px 7px;
     background-color: #ffffff;
@@ -66,6 +67,11 @@
     &:hover {
       background-color: #eb5a1e;
       color: #ffffff;
+    }
+    &:active {
+      top: 0.1em;
+      left: 0.1em;
+      box-shadow: 0 0 0 60px rgba(0, 0, 0, 0.05) inset;
     }
   }
 }

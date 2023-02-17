@@ -75,9 +75,7 @@ export const CartList = () => {
           Назад
         </Button>
 
-        <Button danger className="rounded-lg text-orange-500">
-          Оплатить
-        </Button>
+        <Button className="rounded-lg text-orange-500">Оплатить</Button>
       </div>
     </div>
   );

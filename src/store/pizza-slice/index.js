@@ -1,1 +1,1 @@
-export * from "./pizza.slice";
+export * from "./pizza.silce";

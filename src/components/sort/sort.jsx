@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { pizzasActions } from "../../store";
+import { filterActions } from "../../store";
 import { sortOptions } from "../../data";
 
 export const Sort = () => {
-  const sorting = useSelector((item) => item.pizzas.sorting);
+  const sorting = useSelector((item) => item.filter.sorting);
 
   const dispatch = useDispatch();
 
   const handleSortChange = (value) => {
-    dispatch(pizzasActions.setSorting(value));
+    dispatch(filterActions.setSorting(value));
   };
 
   return (

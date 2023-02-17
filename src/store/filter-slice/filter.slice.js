@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
-  name: "pizzas",
+export const { reducer: filterReducer, actions: filterActions } = createSlice({
+  name: "filter",
   initialState: {
     pizzas: [],
     categoryActive: 0,

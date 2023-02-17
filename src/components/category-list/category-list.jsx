@@ -1,18 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { categorys } from "../../data";
-import { pizzasActions } from "../../store";
+import { filterActions } from "../../store";
 import { CategoryItem } from "../category-item";
 
 import styles from "./category-list.module.scss";
 
 export const CategoryList = () => {
-  const categoryActive = useSelector((item) => item.pizzas.categoryActive);
+  const categoryActive = useSelector((item) => item.filter.categoryActive);
 
   const dispatch = useDispatch();
 
   const handleCategoryClick = (i) => {
-    console.log(i);
-    dispatch(pizzasActions.setCategoryActive(i));
+    dispatch(filterActions.setCategoryActive(i));
   };
 
   return (

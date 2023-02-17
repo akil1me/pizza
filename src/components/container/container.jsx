@@ -1,3 +1,5 @@
+import styles from "./conatiner.module.scss";
+
 export const Container = ({ children }) => {
-  return <div className="container mx-auto">{children}</div>;
+  return <div className={styles.containerr}>{children}</div>;
 };

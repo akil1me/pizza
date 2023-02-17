@@ -1,30 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { pizzasActions } from "../../store";
-import { categorys } from "../../data";
-import { API_URL } from "../../utils";
-import { Loader } from "../loader";
-import { PizzaItem } from "../pizza-item";
-import { Pagination } from "antd";
-import axios from "axios";
-
-import styles from "./pizza-list.module.scss";
-import qs from "qs";
 import { useNavigate } from "react-router-dom";
 
+import { Pagination } from "antd";
+import qs from "qs";
+import { categorys } from "../../data";
+import { fetchPizzas, filterActions } from "../../store";
+import { Loader } from "../loader";
+
+import { PizzaItem } from "../pizza-item";
+import styles from "./pizza-list.module.scss";
+
 export const PizzaList = () => {
-  const { pizzas, isLoading, categoryActive, sorting, pageNum } = useSelector(
-    (item) => item.pizzas
+  const { categoryActive, sorting, pageNum } = useSelector(
+    (item) => item.filter
   );
+  const { pizzas, isLoading, status } = useSelector((item) => item.pizzas);
 
   const isMount = useRef(false);
 
   const dispatch = useDispatch();
 
-  const [err, setErr] = useState("");
-
   const onChangePage = (page) => {
-    dispatch(pizzasActions.setPageNum(page));
+    dispatch(filterActions.setPageNum(page));
   };
 
   const navigate = useNavigate();
@@ -33,7 +31,7 @@ export const PizzaList = () => {
   useEffect(() => {
     if (window.location.search !== "") {
       const parse = qs.parse(window.location.search.substring(1));
-      dispatch(pizzasActions.setParapms({ ...parse }));
+      dispatch(filterActions.setParapms({ ...parse }));
     }
   }, []);
 
@@ -42,20 +40,13 @@ export const PizzaList = () => {
     const sort = sorting !== "" ? `&sortby=${sorting}&order=desc` : "";
     const page =
       categoryActive !== 0 ? `&page=${1}&limit=4` : `&page=${pageNum}&limit=4`;
-
-    (async () => {
-      try {
-        dispatch(pizzasActions.setIsLoading(true));
-
-        const { data } = await axios(API_URL + "?" + page + category + sort);
-        dispatch(pizzasActions.setPizzas(data));
-      } catch (err) {
-        console.log(err);
-        setErr(err.message);
-      } finally {
-        dispatch(pizzasActions.setIsLoading(false));
-      }
-    })();
+    dispatch(
+      fetchPizzas({
+        category,
+        sort,
+        page,
+      })
+    );
   }, [categoryActive, sorting, pageNum, dispatch]);
 
   useEffect(() => {
@@ -74,7 +65,7 @@ export const PizzaList = () => {
     <div className={styles.pizzaContent}>
       <h2 className={styles.title}>{categorys[categoryActive]} пиццы</h2>
 
-      {err == "" ? (
+      {status === "" ? (
         <ul className={styles.pizzasList}>
           {!isLoading
             ? pizzas?.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
@@ -87,7 +78,7 @@ export const PizzaList = () => {
       ) : (
         <div className="h-60 flex justify-center items-center text-3xl">
           Ups 😥
-          {err}
+          {status}
         </div>
       )}
       <div className={styles.pagination}>

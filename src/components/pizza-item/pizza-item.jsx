@@ -1,8 +1,8 @@
+import { Button, notification } from "antd";
 import { useState } from "react";
-import styles from "./pizza.module.scss";
-import { Button, message, notification } from "antd";
 import { useDispatch } from "react-redux";
 import { setAddItems } from "../../store";
+import styles from "./pizza.module.scss";
 
 const typePizza = ["тонкое", "традиционное"];
 
