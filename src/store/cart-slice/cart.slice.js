@@ -7,14 +7,22 @@ const total = (state) => {
   state.totalPrice = state.items.reduce((acc, item) => {
     return item.price * item.count + acc;
   }, 0);
+
+  localStorage.setItem("totlaCount", state.totalCount);
+  localStorage.setItem("totalPrice", state.totalPrice);
+  localStorage.setItem("pizzas", JSON.stringify(state.items));
 };
+
+const getPizzas = JSON.parse(localStorage.getItem("pizzas"));
+const getTotalCount = JSON.parse(localStorage.getItem("totlaCount"));
+const getTotalPrice = JSON.parse(localStorage.getItem("totalPrice"));
 
 const { actions, reducer } = createSlice({
   name: "cart",
   initialState: {
-    items: [],
-    totalPrice: 0,
-    totalCount: 0,
+    items: getPizzas || [],
+    totalPrice: getTotalPrice || 0,
+    totalCount: getTotalCount || 0,
   },
 
   reducers: {
@@ -62,6 +70,7 @@ const { actions, reducer } = createSlice({
       state.items = [];
       state.totalCount = 0;
       state.totalPrice = 0;
+      localStorage.removeItem("pizzas");
     },
   },
 });

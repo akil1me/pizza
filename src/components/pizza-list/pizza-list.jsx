@@ -33,7 +33,7 @@ export const PizzaList = () => {
       const parse = qs.parse(window.location.search.substring(1));
       dispatch(filterActions.setParapms({ ...parse }));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const category = +categoryActive !== 0 ? "&category=" + categoryActive : "";
@@ -60,7 +60,7 @@ export const PizzaList = () => {
       navigate(`?${queryStr}`);
     }
     isMount.current = true;
-  }, [categoryActive, sorting, pageNum, dispatch]);
+  }, [categoryActive, sorting, pageNum, dispatch, navigate]);
   return (
     <div className={styles.pizzaContent}>
       <h2 className={styles.title}>{categorys[categoryActive]} пиццы</h2>

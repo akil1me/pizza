@@ -13,7 +13,7 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = () => {
     api.success({
-      message: "Пицца добалено",
+      message: <h3>{title} добалено</h3>,
       duration: 1.5,
       icon: <img src={imageUrl} alt="pizza" width={30} height={30} />,
       description: `Тесто ${typePizza[activeType]}, ${sizes[activeSize]} см.`,

@@ -7,6 +7,7 @@ export const fetchPizzas = createAsyncThunk(
   "users/fetchPizzasStatus",
   async ({ page, category, sort }) => {
     const { data } = await axios(API_URL + "?" + page + category + sort);
+
     return data;
   }
 );
@@ -29,8 +30,8 @@ export const { reducer: pizzasReducer, actions: pizzasActions } = createSlice({
       state.pizzas = payload;
       state.isLoading = false;
     },
-    [fetchPizzas.rejected]: (state) => {
-      state.status = "Error";
+    [fetchPizzas.rejected]: (state, action) => {
+      state.status = action.error.message;
       state.pizzas = [];
       state.isLoading = false;
     },
