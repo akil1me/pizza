@@ -71,6 +71,8 @@ const { actions, reducer } = createSlice({
       state.totalCount = 0;
       state.totalPrice = 0;
       localStorage.removeItem("pizzas");
+      localStorage.removeItem("totlaCount");
+      localStorage.removeItem("totalPrice");
     },
   },
 });
