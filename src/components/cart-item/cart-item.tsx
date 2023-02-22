@@ -1,3 +1,5 @@
+import {FC} from  "react"
+
 import { Button } from "antd";
 import {
   MinusCircleOutlined,
@@ -11,7 +13,17 @@ import { useDispatch } from "react-redux";
 import { setMinusCount, setPlusCount, setRemoveItem } from "../../store";
 import confirm from "antd/es/modal/confirm";
 
-export const CartItem = ({
+type CartItemProps = {
+  id: number;
+  title:string;
+  imageUrl: string;
+  types:string;
+  sizes: number;
+  price: number;
+  count: number;
+}
+
+export const CartItem: FC<CartItemProps> = ({
   id,
   title,
   imageUrl,
@@ -28,7 +40,7 @@ export const CartItem = ({
       icon: <ExclamationCircleFilled style={{ color: "#FF4D4F" }} />,
       okText: "Да",
       okType: "danger",
-      okCancel: "Нет",
+      okCancel: true,
       cancelText: "Нет",
       onOk() {
         dispatch(setRemoveItem(id));

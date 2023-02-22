@@ -1,4 +1,9 @@
-export const sortOptions = [
+type Options = {
+  value: string;
+  text: string;
+}
+
+export const sortOptions:Options[] = [
   {
     value: "",
     text: "по умолчанию",

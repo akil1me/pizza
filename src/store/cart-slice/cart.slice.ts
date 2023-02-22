@@ -1,6 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const total = (state) => {
+export type CartItems = {
+  id: number;
+  count: number;
+  imageUrl:string;
+  price: number;
+  sizes: number;
+  types: string;
+  title: string;
+
+}
+
+interface CartSliceState {
+items: CartItems[] ;
+totalPrice: number;
+totalCount: number;
+}
+
+const total = (state :CartSliceState) => {
   state.totalCount = state.items.reduce((acc, item) => {
     return item.count + acc;
   }, 0);
@@ -8,26 +25,28 @@ const total = (state) => {
     return item.price * item.count + acc;
   }, 0);
 
-  localStorage.setItem("totlaCount", state.totalCount);
-  localStorage.setItem("totalPrice", state.totalPrice);
+  localStorage.setItem("totlaCount", String(state.totalCount));
+  localStorage.setItem("totalPrice", String(state.totalPrice));
   localStorage.setItem("pizzas", JSON.stringify(state.items));
 };
 
-const getPizzas = JSON.parse(localStorage.getItem("pizzas"));
-const getTotalCount = JSON.parse(localStorage.getItem("totlaCount"));
-const getTotalPrice = JSON.parse(localStorage.getItem("totalPrice"));
+const getPizzas:CartItems[] = JSON.parse(localStorage.getItem("pizzas") || "[]");
+const getTotalCount:number = JSON.parse(localStorage.getItem("totlaCount")|| "0");
+const getTotalPrice:number = JSON.parse(localStorage.getItem("totalPrice") || "0");
+
+
+const initialState:CartSliceState = {
+  items: getPizzas,
+  totalPrice: getTotalPrice,
+  totalCount: getTotalCount,
+  }
 
 const { actions, reducer } = createSlice({
   name: "cart",
-  initialState: {
-    items: getPizzas || [],
-    totalPrice: getTotalPrice || 0,
-    totalCount: getTotalCount || 0,
-  },
-
+  initialState,
   reducers: {
     // Add Pizzas in cart
-    setAddItems(state, { payload }) {
+    setAddItems(state, { payload }: PayloadAction<CartItems>) {
       const findItem = state.items.find(
         (item) =>
           item.imageUrl === payload.imageUrl &&
@@ -44,7 +63,7 @@ const { actions, reducer } = createSlice({
       total(state);
     },
     // Plus in cart page
-    setPlusCount(state, { payload }) {
+    setPlusCount(state, { payload }:PayloadAction<number>) {
       const findItem = state.items.find((item) => item.id === payload);
       if (findItem) {
         findItem.count++;
@@ -53,7 +72,7 @@ const { actions, reducer } = createSlice({
       total(state);
     },
     // Minus in cart page
-    setMinusCount(state, { payload }) {
+    setMinusCount(state, { payload }:PayloadAction<number>) {
       const findItem = state.items.find((item) => item.id === payload);
       if (findItem) {
         findItem.count--;
@@ -61,7 +80,7 @@ const { actions, reducer } = createSlice({
       total(state);
     },
     // Delete Pizza block
-    setRemoveItem(state, { payload }) {
+    setRemoveItem(state, { payload }:PayloadAction<number>) {
       state.items = state.items.filter((item) => item.id !== payload);
       total(state);
     },
@@ -70,9 +89,7 @@ const { actions, reducer } = createSlice({
       state.items = [];
       state.totalCount = 0;
       state.totalPrice = 0;
-      localStorage.removeItem("pizzas");
-      localStorage.removeItem("totlaCount");
-      localStorage.removeItem("totalPrice");
+      localStorage.clear()
     },
   },
 });

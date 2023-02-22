@@ -1,7 +1,9 @@
+import { FC} from "react"
+
 import { Button, Result } from "antd";
 import { Link } from "react-router-dom";
 
-export const NotFound = () => {
+export const NotFound: FC = () => {
   return (
     <Result
       status="404"

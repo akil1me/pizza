@@ -11,10 +11,11 @@ import { CartItem } from "../cart-item";
 import styles from "./cart-list.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import confirm from "antd/es/modal/confirm";
-import { setClearItems } from "../../store";
+import { RootState, setClearItems } from "../../store";
 
-export const CartList = () => {
-  const { items, totalPrice, totalCount } = useSelector((item) => item.cart);
+export const CartList: React.FC = () => {
+  const { items, totalPrice, totalCount } = useSelector((item: RootState) => item.cart);
+  
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export const CartList = () => {
       icon: <ExclamationCircleFilled style={{ color: "#FF4D4F" }} />,
       okText: "Да",
       okType: "danger",
-      okCancel: "Нет",
+      okCancel: true,
       cancelText: "Нет",
       onOk() {
         dispatch(setClearItems());
@@ -53,7 +54,7 @@ export const CartList = () => {
       </div>
 
       <ul className="mt-7">
-        {items?.map((item) => (
+        {items.map((item) => (
           <CartItem key={item.id} {...item} />
         ))}
       </ul>

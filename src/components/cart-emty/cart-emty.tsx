@@ -1,8 +1,9 @@
+import {FC} from "react"; 
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import cartEmty from "../../assets/images/cart-emty.png";
 
-export const CartEmty = () => {
+export const CartEmty: FC = () => {
   return (
     <div className="flex flex-col justify-center items-center text-center my-16">
       <h2 className="font-bold text-3xl mb-4">Корзина пустая 😕</h2>

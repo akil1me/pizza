@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { filterActions } from "../../store";
+import { RootState, filterActions } from "../../store";
 import { sortOptions } from "../../data";
 
 export const Sort = () => {
-  const sorting = useSelector((item) => item.filter.sorting);
+  const sorting = useSelector((item :RootState) => item.filter.sorting);
 
   const dispatch = useDispatch();
 
-  const handleSortChange = (value) => {
+  const handleSortChange = (value:string) => {
     dispatch(filterActions.setSorting(value));
   };
 

@@ -11,3 +11,5 @@ export const configStore = configureStore({
     cart: cartReducer,
   },
 });
+
+export type RootState = ReturnType<typeof configStore.getState>

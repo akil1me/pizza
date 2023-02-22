@@ -4,9 +4,10 @@ import basket from "../../assets/images/iconfinder_shopping-cart.svg";
 import styles from "./header.module.scss";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
-export const Header = ({ link }) => {
-  const { totalCount, totalPrice } = useSelector((item) => item.cart);
+export const Header: React.FC = () => {
+  const { totalCount, totalPrice } = useSelector((item: RootState) => item.cart);
 
   const { pathname } = useLocation();
 

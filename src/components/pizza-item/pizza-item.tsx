@@ -1,14 +1,24 @@
+import {FC} from "react"
+
 import { Button, notification } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAddItems } from "../../store";
 import styles from "./pizza.module.scss";
 
-const typePizza = ["тонкое", "традиционное"];
+type PizzaItemProps = {
+  title:string;
+  imageUrl: string;
+  sizes: number[];
+  types:number[];
+  price: number[];
+}
 
-export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
-  const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(0);
+const typePizza: string[] = ["тонкое", "традиционное"];
+
+export const PizzaItem: FC<PizzaItemProps>= ({ title, imageUrl, sizes, types, price }) => {
+  const [activeType, setActiveType] = useState<number>(types[0]);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = () => {
@@ -83,8 +93,8 @@ export const PizzaItem = ({ title, imageUrl, sizes, types, price }) => {
           <Button
             onClick={handlePizzaount}
             className={styles.pizzaAdd}
-            type="button"
-          >
+            danger
+            >
             в корзину
           </Button>
         </div>

@@ -1,6 +1,8 @@
+import {FC} from "react"
+
 import ContentLoader from "react-content-loader";
 
-export const Loader = (props) => {
+export const Loader: FC = () => {
   return (
     <ContentLoader
       speed={2}
@@ -9,7 +11,7 @@ export const Loader = (props) => {
       viewBox="0 0 260 449.6"
       backgroundColor="#f3f3f3"
       foregroundColor="#ecebeb"
-      {...props}
+    
     >
       <circle className="mx-auto" cx="130" cy="130" r="130" />
       <rect x="-3" y="327" rx="0" ry="0" width="260" height="69" />

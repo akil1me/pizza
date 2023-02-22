@@ -1,17 +1,19 @@
+import {FC} from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { categorys } from "../../data";
-import { filterActions } from "../../store";
+import { RootState, filterActions } from "../../store";
 import { CategoryItem } from "../category-item";
 
 import styles from "./category-list.module.scss";
 
-export const CategoryList = () => {
-  const categoryActive = useSelector((item) => item.filter.categoryActive);
+export const CategoryList: FC = () => {
+  const categoryActive = useSelector((item: RootState) => item.filter.categoryActive);
 
   const dispatch = useDispatch();
 
-  const handleCategoryClick = (i) => {
-    dispatch(filterActions.setCategoryActive(i));
+  const handleCategoryClick = (i: number) => {
+    dispatch(filterActions.setCategoryActive(+i));
   };
 
   return (
@@ -32,7 +34,7 @@ export const CategoryList = () => {
         <span>Категория по:</span>
         <select
           className={styles.categoryListSelect}
-          onChange={(e) => handleCategoryClick(e.target.value)}
+          onChange={(e) => handleCategoryClick(+e.target.value)}
           value={categoryActive}
         >
           {categorys.map((item, index) => {
