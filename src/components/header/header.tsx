@@ -1,10 +1,10 @@
-import logo from "../../assets/images/logo.png";
 import basket from "../../assets/images/iconfinder_shopping-cart.svg";
+import logo from "../../assets/images/logo.png";
 
-import styles from "./header.module.scss";
-import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import { RootState } from "../../store";
+import styles from "./header.module.scss";
 
 export const Header: React.FC = () => {
   const { totalCount, totalPrice } = useSelector((item: RootState) => item.cart);

@@ -1,21 +1,25 @@
 import {
   DeleteOutlined,
-  LeftOutlined,
   ExclamationCircleFilled,
+  LeftOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
+import { AnimatePresence } from "framer-motion";
+
 import cart from "../../assets/images/cart.svg";
 
+import confirm from "antd/es/modal/confirm";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { RootState, setClearItems } from "../../store";
 import { CartItem } from "../cart-item";
 import styles from "./cart-list.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import confirm from "antd/es/modal/confirm";
-import { RootState, setClearItems } from "../../store";
 
 export const CartList: React.FC = () => {
-  const { items, totalPrice, totalCount } = useSelector((item: RootState) => item.cart);
-  
+  const { items, totalPrice, totalCount } = useSelector(
+    (item: RootState) => item.cart
+  );
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -52,11 +56,12 @@ export const CartList: React.FC = () => {
           <strong className="ml-3 hidden sm:inline"> Очистить корзину</strong>
         </Button>
       </div>
-
       <ul className="mt-7">
-        {items.map((item) => (
-          <CartItem key={item.id} {...item} />
-        ))}
+        <AnimatePresence>
+          {items.map((item) => (
+            <CartItem key={item.id} {...item} />
+          ))}
+        </AnimatePresence>
       </ul>
 
       <div className="flex flex-col sm:flex-row justify-between items-center mt-3">

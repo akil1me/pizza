@@ -1,10 +1,12 @@
 import { FC } from "react";
 import { CategoryList, Container, PizzaList, Sort } from "../../components";
 
+import styles from "./home.module.scss"
+
 export const Home: FC = () => {
   return (
     <Container>
-      <div className="flex flex-col xl:flex-row items-center justify-center xl:justify-between mt-4">
+      <div className={styles.home}>
         <CategoryList />
         <Sort />
       </div>

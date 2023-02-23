@@ -1,6 +1,7 @@
-import {FC} from  "react"
+import { FC } from "react";
 
 import { Button } from "antd";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   MinusCircleOutlined,
   PlusCircleOutlined,
@@ -52,7 +53,14 @@ export const CartItem: FC<CartItemProps> = ({
     }
   };
   return (
-    <li className={styles.cartItem}>
+    <motion.li
+      layout
+      className={styles.cartItem}
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -100, opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex flex-col sm:flex-row items-center">
         <img src={imageUrl} alt="cart pizza" width={80} height={80} />
         <div className="sm:ml-4 w-40">
@@ -88,6 +96,6 @@ export const CartItem: FC<CartItemProps> = ({
         className={styles.cartBtn + " absolute top-3 right-3 sm:static"}
         icon={<CloseCircleOutlined className="align-middle" />}
       />
-    </li>
+    </motion.li>
   );
 };

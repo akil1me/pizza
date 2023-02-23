@@ -1,13 +1,20 @@
 import { Button, notification } from "antd";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAddItems } from "../../store";
 import styles from "./pizza.module.scss";
-import { Pizzas  as PizzaItemProps } from "../../@types";
+import { Pizzas as PizzaItemProps } from "../../@types";
 
 const typePizza: string[] = ["тонкое", "традиционное"];
 
-export const PizzaItem: React.FC<PizzaItemProps>= ({ title, imageUrl, sizes, types, price }) => {
+export const PizzaItem: React.FC<PizzaItemProps> = ({
+  title,
+  imageUrl,
+  sizes,
+  types,
+  price,
+}) => {
   const [activeType, setActiveType] = useState<number>(types[0]);
   const [activeSize, setActiveSize] = useState<number>(0);
 
@@ -40,8 +47,13 @@ export const PizzaItem: React.FC<PizzaItemProps>= ({ title, imageUrl, sizes, typ
 
   return (
     <>
-      {contextHolder}
-      <li className={styles.pizza}>
+      <motion.li
+        className={styles.pizza}
+        initial={{ y: 150, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {contextHolder}
         <img src={imageUrl} alt="pizza" width={260} height={260} />
         <h4 className="text-lg font-bold mb-3">{title}</h4>
 
@@ -81,15 +93,11 @@ export const PizzaItem: React.FC<PizzaItemProps>= ({ title, imageUrl, sizes, typ
 
         <div className={styles.pizzaFooter}>
           <p className={styles.pizzaPrice}>от {price[activeSize]} ₽</p>
-          <Button
-            onClick={handlePizzaount}
-            className={styles.pizzaAdd}
-            danger
-            >
+          <Button onClick={handlePizzaount} className={styles.pizzaAdd} danger>
             в корзину
           </Button>
         </div>
-      </li>
+      </motion.li>
     </>
   );
 };
