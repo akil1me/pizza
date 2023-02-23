@@ -12,16 +12,7 @@ import styles from "./cart-item.module.scss";
 import { useDispatch } from "react-redux";
 import { setMinusCount, setPlusCount, setRemoveItem } from "../../store";
 import confirm from "antd/es/modal/confirm";
-
-type CartItemProps = {
-  id: number;
-  title:string;
-  imageUrl: string;
-  types:string;
-  sizes: number;
-  price: number;
-  count: number;
-}
+import { CartTypes as CartItemProps } from "../../@types";
 
 export const CartItem: FC<CartItemProps> = ({
   id,

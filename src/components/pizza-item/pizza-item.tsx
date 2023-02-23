@@ -1,22 +1,13 @@
-import {FC} from "react"
-
 import { Button, notification } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setAddItems } from "../../store";
 import styles from "./pizza.module.scss";
-
-type PizzaItemProps = {
-  title:string;
-  imageUrl: string;
-  sizes: number[];
-  types:number[];
-  price: number[];
-}
+import { Pizzas  as PizzaItemProps } from "../../@types";
 
 const typePizza: string[] = ["тонкое", "традиционное"];
 
-export const PizzaItem: FC<PizzaItemProps>= ({ title, imageUrl, sizes, types, price }) => {
+export const PizzaItem: React.FC<PizzaItemProps>= ({ title, imageUrl, sizes, types, price }) => {
   const [activeType, setActiveType] = useState<number>(types[0]);
   const [activeSize, setActiveSize] = useState<number>(0);
 

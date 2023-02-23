@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Pagination } from "antd";
 import qs from "qs";
 import { categorys } from "../../data";
-import { fetchPizzas, filterActions } from "../../store";
+import { RootState, fetchPizzas, filterActions,useAppDispatch } from "../../store";
 import { Loader } from "../loader";
 
 import { PizzaItem } from "../pizza-item";
@@ -13,15 +13,15 @@ import styles from "./pizza-list.module.scss";
 
 export const PizzaList = () => {
   const { categoryActive, sorting, pageNum } = useSelector(
-    (item) => item.filter
+    (item: RootState) => item.filter
   );
-  const { pizzas, isLoading, status } = useSelector((item) => item.pizzas);
+  const { pizzas, isLoading, status } = useSelector((item:RootState) => item.pizzas);
 
-  const isMount = useRef(false);
+  const isMount = useRef<boolean>(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onChangePage = (page) => {
+  const onChangePage = (page :number) => {
     dispatch(filterActions.setPageNum(page));
   };
 
@@ -30,8 +30,9 @@ export const PizzaList = () => {
 
   useEffect(() => {
     if (window.location.search !== "") {
-      const parse = qs.parse(window.location.search.substring(1));
-      dispatch(filterActions.setParapms({ ...parse }));
+      const parse:any = qs.parse(window.location.search.substring(1));
+      
+      dispatch(filterActions.setParapms(parse));
     }
   }, [dispatch]);
 
@@ -68,7 +69,7 @@ export const PizzaList = () => {
       {status === "" ? (
         <ul className={styles.pizzasList}>
           {!isLoading
-            ? pizzas?.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
+            ? pizzas.map((pizza) => <PizzaItem key={pizza.id} {...pizza} />)
             : [...new Array(4)].map((_, index) => (
                 <li key={index} style={{ marginBottom: 50 }}>
                   <Loader />
