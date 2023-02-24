@@ -56,7 +56,7 @@ export const CartList: React.FC = () => {
           <strong className="ml-3 hidden sm:inline"> Очистить корзину</strong>
         </Button>
       </div>
-      <ul className="mt-7">
+      <ul className={styles.cartPizzasList}>
         <AnimatePresence>
           {items.map((item) => (
             <CartItem key={item.id} {...item} />
@@ -64,7 +64,7 @@ export const CartList: React.FC = () => {
         </AnimatePresence>
       </ul>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mt-3">
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-8">
         <p>Всего пицц: {totalCount} шт.</p>
         <p>
           Сумма заказа:{" "}

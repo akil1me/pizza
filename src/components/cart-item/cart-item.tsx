@@ -1,19 +1,19 @@
 import { FC } from "react";
 
-import { Button } from "antd";
-import { motion, AnimatePresence } from "framer-motion";
 import {
-  MinusCircleOutlined,
-  PlusCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleFilled,
+  MinusCircleOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
+import { Button } from "antd";
+import { motion } from "framer-motion";
 
-import styles from "./cart-item.module.scss";
-import { useDispatch } from "react-redux";
-import { setMinusCount, setPlusCount, setRemoveItem } from "../../store";
 import confirm from "antd/es/modal/confirm";
+import { useDispatch } from "react-redux";
 import { CartTypes as CartItemProps } from "../../@types";
+import { setMinusCount, setPlusCount, setRemoveItem } from "../../store";
+import styles from "./cart-item.module.scss";
 
 export const CartItem: FC<CartItemProps> = ({
   id,

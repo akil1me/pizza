@@ -1,11 +1,11 @@
-import {FC} from "react"; 
+import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import cartEmty from "../../assets/images/cart-emty.png";
 
 export const CartEmty: FC = () => {
   return (
-    <div className="flex flex-col justify-center items-center text-center my-16">
+    <div className="flex flex-col justify-center items-center text-center mt-16">
       <h2 className="font-bold text-3xl mb-4">Корзина пустая 😕</h2>
       <p className="max-w-xl mb-6">
         Вероятней всего, вы не заказывали ещё пиццу. Для того, чтобы заказать
