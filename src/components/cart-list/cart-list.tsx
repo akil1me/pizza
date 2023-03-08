@@ -3,7 +3,7 @@ import {
   ExclamationCircleFilled,
   LeftOutlined,
 } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { AnimatePresence } from "framer-motion";
 
 import cart from "../../assets/images/cart.svg";
@@ -14,11 +14,14 @@ import { useNavigate } from "react-router-dom";
 import { RootState, setClearItems } from "../../store";
 import { CartItem } from "../cart-item";
 import styles from "./cart-list.module.scss";
+import { useState } from "react";
+import { FormPay } from "../form";
 
 export const CartList: React.FC = () => {
   const { items, totalPrice, totalCount } = useSelector(
     (item: RootState) => item.cart
   );
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -37,6 +40,14 @@ export const CartList: React.FC = () => {
       },
       onCancel() {},
     });
+  };
+
+  const handlePayPizzas = (value: any) => {
+    console.log({ value, items, totalPrice, totalCount });
+
+    navigate("/pay");
+    setOpenModal(false);
+    dispatch(setClearItems());
   };
 
   return (
@@ -81,8 +92,25 @@ export const CartList: React.FC = () => {
           Назад
         </Button>
 
-        <Button className="rounded-lg text-orange-500">Оплатить</Button>
+        <Button
+          onClick={() => setOpenModal(true)}
+          className="rounded-lg text-orange-500"
+        >
+          Оплатить
+        </Button>
       </div>
+      <Modal
+        title="Введите ваши данные"
+        open={openModal}
+        onCancel={() => setOpenModal(false)}
+        footer={[
+          <Button key={1} htmlType="submit" form="complex-form">
+            Отправить
+          </Button>,
+        ]}
+      >
+        <FormPay handlePayPizzas={handlePayPizzas} />,
+      </Modal>
     </div>
   );
 };

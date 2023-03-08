@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {  Cart, Home, NotFound } from "./pages";
+import { Cart, Home, NotFound, PaySucsess } from "./pages";
 
 import "./app.scss";
 import { Route, Routes } from "react-router-dom";
@@ -11,8 +11,9 @@ const App: FC = () => {
       <Routes>
         <Route path="/" element={<Loyout />}>
           <Route path="" element={<Home />} />
-          <Route path="cart" element={<Cart/>} />
+          <Route path="cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="pay" element={<PaySucsess />} />
         </Route>
       </Routes>
     </div>
